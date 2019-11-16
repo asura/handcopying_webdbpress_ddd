@@ -1,0 +1,52 @@
+@startuml class
+
+skinparam {
+  Monochrome true
+  Shadowing false
+}
+hide circle
+hide empty members
+
+title ドメインモデルのバージョン1
+
+class "面接" as c1 {
+  面接ID
+  応募日
+  進捗ステータス
+}
+
+class "面接記録" as c2 {
+  面接ID
+  面接官ID
+  面接種別
+  面接日付
+  面接結果
+}
+
+class "面接官" as c3 {
+  面接官ID
+  名前
+}
+
+class "採用ポジション" as c4 {
+  採用ポジションID
+  採用ポジション名
+  募集ステータス
+}
+
+c1 "1" *-r- "0..n" c2
+c2 "1" -- "1..n" c3
+
+c1 "0..n" --l-> "1" c4
+
+note top of c1
+・応募日: 面接登録した日付
+・必ずポジションが1つ紐付く
+end note
+
+note top of c2
+・種別は「1次面接」「2次面接」「最終面接」
+・面接結果は「合格」「不合格」
+end note
+
+@enduml
