@@ -1,0 +1,28 @@
+@startuml use_case
+
+skinparam {
+  Monochrome true
+  Shadowing false
+}
+
+title 面接管理システムのユースケース図
+
+:面接官: as actor
+
+rectangle 面接 {
+  rectangle 今回のスコープ {
+    (面接を登録する) as uc1
+    (面接官を設定する) as uc2
+    (面接のステータスを進める) as uc3
+  }
+  (会議を予約する) as uc4
+}
+
+uc1 .[hidden]. uc3
+uc3 .[hidden]. uc4
+actor -r-> uc1
+actor --> uc3
+actor --> uc4
+uc1 .r.> uc2
+
+@enduml
