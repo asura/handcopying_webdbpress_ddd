@@ -7,40 +7,46 @@ skinparam {
 hide circle
 hide empty members
 
-title ドメインモデルのバージョン3
+title ドメインモデルのバージョン4
 
-class "採用選考" as c1 {
-  応募日付
-  選考ステータス
-  候補者情報
+package 採用選考集約 <<rectangle>> {
+  class "採用選考" as c1 <<集約ルート>> {
+    応募日付
+    選考ステータス
+    候補者情報
+  }
+
+  class "面接" as c2 {
+    面接次数
+    面接日付
+    面接結果
+  }
+
+  class "面談" as c5 {
+    面談日付
+  }
 }
 
-class "面接" as c2 {
-  面接次数
-  面接日付
-  面接結果
+package 採用担当者集約 <<rectangle>> {
+  class "採用担当者" as c3 <<集約ルート>> {
+    名前
+  }
 }
 
-class "採用担当者" as c3 {
-  名前
+package 採用ポジション集約 <<rectangle>> {
+  class "採用ポジション" as c4 <<集約ルート>> {
+    採用ポジション名
+    募集ステータス
+  }
 }
 
-class "採用ポジション" as c4 {
-  採用ポジション名
-  募集ステータス
-}
-
-class "面談" as c5 {
-  面談日付
-}
+c4 "0..1" <- "0" c1
 
 c1 "1" *-r- "0..n" c2
 c2 "1" ---> "1..n" c3 : 面接担当者
 
 c1 "1" *-d- "0..n" c5
 c5 "1" -r-> "1..n" c3 : 面談担当者
-
-c1 "0..n" --l-> "0..1" c4
 
 note top of c1
 ・選考ステータスは「未募集」「選考中」「採用」「不採用」
@@ -55,7 +61,7 @@ note top of c2
 ・面接結果は「未評価」「合格」「不合格」
 end note
 
-note top of c4
+note bottom of c4
 ・ステータスは
   「募集中」「募集終了」
 end note
