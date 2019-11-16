@@ -5,7 +5,7 @@ skinparam {
   Shadowing false
 }
 
-title 面接管理システムのユースケース図
+title 採用選考管理システムのユースケース図
 
 :面接官: as actor
 
